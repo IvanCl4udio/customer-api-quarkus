@@ -1,0 +1,29 @@
+version: "3.8"
+services:
+  customer-db:
+    image: postgres
+    container_name: customer-quarkus-database
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    volumes:
+      - local_pgdata_quarkus:/var/lib/postgresql/data
+  customer-db-pgadmin:
+    image: dpage/pgadmin4
+    container_name: customer-quarkus-pgadmin4
+    restart: always
+    ports:
+      - "8888:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: user@domain.com
+      PGADMIN_DEFAULT_PASSWORD: user@1234
+    volumes:
+      - pgadmin_data_quarkus:/var/lib/pgadmin
+
+volumes:
+  local_pgdata_quarkus:
+  pgadmin_data_quarkus:
